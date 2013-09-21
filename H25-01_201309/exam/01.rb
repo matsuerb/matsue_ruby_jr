@@ -30,7 +30,7 @@ QA.each do |q, as|
 
   ans = nil
 
-  # 答えの順番を入れ替える
+  # 答えの順番を入れ替える: p.34, ?sort
 
   as.each_with_index do |a, i|
     if /^a/ =~ a
@@ -47,12 +47,12 @@ QA.each do |q, as|
     if ans == i.to_i
       # "正解"を表示する: p.12
 
-      # 課題2: 得点(score)を増やしましょう
+      # 課題2: 得点(score)を増やしましょう: ?変数がp.14、四則演算ならp.17
       break
     else
       # "はずれ"を表示する: p.12
 
-      # 課題4: 得点(score)を減らしましょう
+      # 課題4: 得点(score)を減らしましょう: ?変数がp.14、四則演算ならp.17
     end
   end
 end
