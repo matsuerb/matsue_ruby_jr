@@ -26,7 +26,7 @@ QA = [
 score = 0
 puts "問題は#{ QA.length }問です。"
 QA.each do |q, as|
-  # 問題を表示する
+  # 問題を表示する: p.12
 
   ans = nil
 
@@ -38,25 +38,25 @@ QA.each do |q, as|
       # 答えの先頭にある'a'を取り除く
 
     end
-    # 選択肢を表示する
+    # 選択肢を表示する: p.15
 
   end
   loop do
     # キーボードを操作して答えを入力する
 
     if ans == i.to_i
-      # "正解"を表示する
+      # "正解"を表示する: p.12
 
       # 課題2: 得点(score)を増やしましょう
       break
     else
-      # "はずれ"を表示する
+      # "はずれ"を表示する: p.12
 
       # 課題4: 得点(score)を減らしましょう
     end
   end
 end
-# 課題3: 得点(score)を表示しましょう
+# 課題3: 得点(score)を表示しましょう: p.15
 
 puts "returnまたはenterキーで終了します。"
 gets
