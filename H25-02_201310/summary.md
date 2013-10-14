@@ -49,7 +49,7 @@ e-typing (http://www.e-typing.ne.jp/) を利用して、タイピングの練習
 
 ## 講師紹介
 
-講師を含め、Matsue.rbのメンバーの詳細はMatsue.rbの [公式Webサイト](http://matsue.rubyist.net/) [Matsue.rb(松江Ruby)とは](http://matsue.rubyist.net/about_us/) で紹介しています。
+講師を含め、Matsue.rbのメンバーの詳細はMatsue.rbの [公式Webサイト](http://matsue.rubyist.net/) [Matsue.rb(松江Ruby)とは](http://matsue.rubyist.net/members/) で紹介しています。
 
 ### 高尾宏治
 
