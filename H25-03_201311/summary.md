@@ -8,7 +8,7 @@
 
 * 日時: 平成25年11月16日(土) 18:00〜20:00
 * 場所: [松江オープンソースラボ](http://www1.city.matsue.shimane.jp/sangyoushinkou/ruby/rubycity/rabo/open.html)
-* 講師: Matsue.rb 高尾宏治、吉岡隆行、井上裕之、佐田あきひろ
+* 講師: Matsue.rb 高尾宏治、吉岡隆行、井上裕之、佐田明弘
 * 参加者: 島根県松江市内の中高生15名
 * テキストの範囲: 第3章まで
 * ホームページ: https://github.com/matsuerb/matsue_ruby_jr
@@ -70,6 +70,6 @@ e-typing (http://www.e-typing.ne.jp/) を利用して、タイピングの練習
 
 RubyとHTML5を愛するレガシーエンジニアです。日々刺激と進化を求めて活動に参加してます。
 
-### 佐田あきひろ
+### 佐田明弘
 
 Matsue.rb に参加している松江市在住のITエンジニア。主に使用しているのはRubyとJavaScript。
