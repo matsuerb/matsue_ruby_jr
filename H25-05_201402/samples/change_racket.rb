@@ -10,10 +10,15 @@ land = 310
 # 得点
 score = 0
 
+# ラケットの設定
+racket_position  = [40, 200] # ラケットの初期位置 [x, y]
+racket_height    = 80        # 高さ
+racket_width     = 10        # 幅
+
 background = Canvas.new
 score_board = Canvas.new
 wall = Canvas.new(x: 780, y: 50, width: 10, height: 280)
-racket = Canvas.new(x: 40, y: 200, height: 80, width: 10)
+racket = Canvas.new(x: racket_position[0], y: racket_position[1], height: racket_height, width: racket_width)
 ball = Canvas.new(x: 50, y: land, width: 22, height: 22)
 
 # 背景
@@ -37,7 +42,7 @@ end
 
 # ラケット
 racket.on(:start) do
-  box_fill(left: 0, top: 0, right: 10, bottom: 80, color: "yellowgreen")
+  box_fill(left: 0, top: 0, right: racket_width, bottom: racket_height, color: "yellowgreen")
 end
 
 # 課題3: ラケットを動かす
@@ -103,6 +108,44 @@ wall.on(:hit, ball) do
 
   # 課題6: スコアを上げる
   score += 1
+
+  # 例題: ラケットのサイズを変える
+  # ここから -->
+  # ラケットを消す
+  racket.vanish
+
+  # ラケットを小さくして作りなおす
+  racket_height = racket_height - 1
+  racket = Canvas.new(x: racket.x, y: racket.y, height: racket_height, width: racket_width)
+
+  racket.on(:start) do
+    box_fill(left: 0, top: 0, right: racket_width, bottom: racket_height, color: "yellowgreen")
+  end
+
+  # 課題3: ラケットを動かす
+  racket.on(:key_down, K_UP) do
+    self.y -= 5
+  end
+
+  racket.on(:key_down, K_DOWN) do
+    self.y += 5
+  end
+
+  racket.on(:key_down, K_LEFT) do
+    self.x -= 5
+  end
+
+  racket.on(:key_down, K_RIGHT) do
+    self.x += 5
+  end
+
+  # ボールとラケットが当たったときの動き
+  ball.on(:hit, racket) do
+    # 課題7: ボールは反射させる
+    turn
+    self.x += 30
+  end
+  # <-- ここまで
 end
 
 # ボールとラケットが当たったときの動き
