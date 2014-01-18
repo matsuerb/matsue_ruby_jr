@@ -97,7 +97,6 @@ ball.on(:start) do
       vanish
       # 例題： ゲームオーバーをつくる
       play(name: "gameover.wav")
-      over_height = racket.y
       loop do
         racket.y += 10
         if racket.y > 400
