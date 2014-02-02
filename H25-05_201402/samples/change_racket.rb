@@ -10,6 +10,9 @@ land = 310
 # 得点
 score = 0
 
+# 残り
+nokori = 2
+
 # ラケットの設定
 racket_position  = [40, 200] # ラケットの初期位置 [x, y]
 racket_height    = 80        # 高さ
@@ -17,6 +20,7 @@ racket_width     = 10        # 幅
 
 background = Canvas.new
 score_board = Canvas.new
+remaining_display = Canvas.new(x: 0, y: 450, width: 300, height: 80)
 wall = Canvas.new(x: 780, y: 50, width: 10, height: 280)
 racket = Canvas.new(x: racket_position[0], y: racket_position[1], height: racket_height, width: racket_width)
 ball = Canvas.new(x: 50, y: land, width: 22, height: 22)
@@ -32,6 +36,19 @@ score_board.on(:start) do
   loop do
     box_fill(left: 0, top: 0, right: 500, bottom: 40, color: "black")
     draw_font(x: 0, y: 0, string: "得点 #{score}点です。", size: 20)
+  end
+end
+
+# 残り
+remaining_display.on(:start) do
+  loop do
+    box_fill(left: 0, top: 0, right: 500, bottom: 40, color: "black")
+    if nokori > 0
+      comment = "あと #{nokori}回です。"
+    else
+      comment = "終わりです。"
+    end
+    draw_font(x: 0, y: 0, string: comment, size: 20)
   end
 end
 
@@ -94,17 +111,25 @@ ball.on(:start) do
     end
 
     if x <= 0
-      vanish
-      # 例題： ゲームオーバーをつくる
-      play(name: "gameover.wav")
-      loop do
-        racket.y += 10
-        if racket.y > 400
-          racket.vanish
-          break
+      if nokori > 1
+        turn
+        ball.x += racket.x + 10
+        ball.y += racket.y
+        nokori -= 1
+      else
+        nokori -= 1
+        vanish
+        # 例題： ゲームオーバーをつくる
+        play(name: "gameover.wav")
+        loop do
+          racket.y += 10
+          if racket.y > 400
+            racket.vanish
+            break
+          end
         end
+        break
       end
-      break
     end
   end
 end
