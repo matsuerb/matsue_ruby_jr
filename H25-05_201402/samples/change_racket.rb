@@ -13,6 +13,9 @@ score = 0
 # 残り
 nokori = 2
 
+# ゲームエンド
+game_end = false
+
 # ラケットの設定
 racket_position  = [40, 200] # ラケットの初期位置 [x, y]
 racket_height    = 80        # 高さ
@@ -79,6 +82,20 @@ racket.on(:key_down, K_RIGHT) do
   self.x += 5
 end
 
+racket.on(:key_down, K_SPACE) do
+  if game_end
+    ball.turn
+    ball.x = 50
+    ball.y = land
+    ball.visible = true
+    racket.x = 40
+    racket.y = 200
+    score = 0
+    nokori = 2
+    game_end = false
+  end
+end
+
 # ボール
 ball.on(:start) do
   # ボールを表示
@@ -118,17 +135,27 @@ ball.on(:start) do
         nokori -= 1
       else
         nokori -= 1
-        vanish
+
+        # 例題： リトライできる
+        ball.x = 0
+        ball.y = 0
+        ball.visible = false
+
         # 例題： ゲームオーバーをつくる
-        play(name: "gameover.wav")
-        loop do
+        #-> vanish
+        if game_end == false
+          play(name: "gameover.wav")
+          loop do
           racket.y += 10
           if racket.y > 400
-            racket.vanish
+        #-->    racket.vanish
             break
           end
+         end
         end
-        break
+        #--> break
+
+        game_end = true
       end
     end
   end
@@ -171,6 +198,20 @@ wall.on(:hit, ball) do
 
   racket.on(:key_down, K_RIGHT) do
     self.x += 5
+  end
+
+  racket.on(:key_down, K_SPACE) do
+    if game_end
+      ball.turn
+      ball.x = 50
+      ball.y = land
+      ball.visible = true
+      racket.x = 40
+      racket.y = 200
+      score = 0
+      nokori = 2
+      game_end = false
+    end
   end
 
   # ボールとラケットが当たったときの動き
