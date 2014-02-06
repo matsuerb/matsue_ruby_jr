@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 require "smalruby"
 
+INITIAL_RACKET_LENGTH = 80
+MIN_RACKET_LENGTH = 10
+DECREMENT_PER_ONCE = 5
+
 # 課題1: 画面の幅を 800 に設定する
 Window.width = 800
 
@@ -17,9 +21,9 @@ nokori = 2
 game_end = false
 
 # ラケットの設定
-racket_position  = [40, 200] # ラケットの初期位置 [x, y]
-racket_height    = 80        # 高さ
-racket_width     = 10        # 幅
+racket_position  = [40, 200]              # ラケットの初期位置 [x, y]
+racket_height    = INITIAL_RACKET_LENGTH  # 高さ
+racket_width     = 10                     # 幅
 
 background = Canvas.new
 score_board = Canvas.new
@@ -90,6 +94,7 @@ racket.on(:key_down, K_SPACE) do
     ball.visible = true
     racket.x = 40
     racket.y = 200
+    racket_height = INITIAL_RACKET_LENGTH
     score = 0
     nokori = 2
     game_end = false
@@ -176,7 +181,9 @@ wall.on(:hit, ball) do
   racket.vanish
 
   # ラケットを小さくして作りなおす
-  racket_height = racket_height - 1
+  if (racket_height - DECREMENT_PER_ONCE) >= MIN_RACKET_LENGTH
+    racket_height -= DECREMENT_PER_ONCE
+  end
   racket = Canvas.new(x: racket.x, y: racket.y, height: racket_height, width: racket_width)
 
   racket.on(:start) do
