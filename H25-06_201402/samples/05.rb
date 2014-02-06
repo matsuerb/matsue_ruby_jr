@@ -2,6 +2,8 @@
 require "smalruby"
 
 INITIAL_RACKET_LENGTH = 80
+MIN_RACKET_LENGTH = 10
+DECREMENT_PER_ONCE = 1
 
 # 課題1: 画面の幅を 800 に設定する
 Window.width = 800
@@ -179,7 +181,9 @@ wall.on(:hit, ball) do
   racket.vanish
 
   # ラケットを小さくして作りなおす
-  racket_height = racket_height - 1
+  if (racket_height - DECREMENT_PER_ONCE) >= MIN_RACKET_LENGTH
+    racket_height -= DECREMENT_PER_ONCE
+  end
   racket = Canvas.new(x: racket.x, y: racket.y, height: racket_height, width: racket_width)
 
   racket.on(:start) do
