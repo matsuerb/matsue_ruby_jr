@@ -3,7 +3,7 @@ require "smalruby"
 
 INITIAL_RACKET_LENGTH = 80
 MIN_RACKET_LENGTH = 10
-DECREMENT_PER_ONCE = 1
+DECREMENT_PER_ONCE = 5
 
 # 課題1: 画面の幅を 800 に設定する
 Window.width = 800
