@@ -106,7 +106,6 @@ racket.on(:key_down, K_SPACE) do
     ball3.visible = true
     racket.x = 40
     racket.y = 200
-    racket_height = INITIAL_RACKET_LENGTH
     score = 0
     nokori = 2
     game_end = false
@@ -333,8 +332,29 @@ wall.on(:hit, ball1) do
       ball3.x = 150
       ball3.y = land3
       ball3.visible = true
+
+      # ラケットの長さを元に戻す
+      racket.vanish
+      racket_height = INITIAL_RACKET_LENGTH
+      racket = Canvas.new(x: racket.x, y: racket.y, height: racket_height, width: racket_width)
+      racket.on(:start) do
+        box_fill(left: 0, top: 0, right: racket_width, bottom: racket_height, color: "yellowgreen")
+      end
+      racket.on(:key_down, K_UP) do
+        self.y -= 5
+      end
+      racket.on(:key_down, K_DOWN) do
+        self.y += 5
+      end
+      racket.on(:key_down, K_LEFT) do
+        self.x -= 5
+      end
+      racket.on(:key_down, K_RIGHT) do
+        self.x += 5
+      end
       racket.x = 40
       racket.y = 200
+
       score = 0
       nokori = 2
       game_end = false
