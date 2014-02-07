@@ -10,34 +10,37 @@ land = 310
 # 得点
 score = 0
 
+# 追加課題1-1: ボールの速さ
+speed = 10
+
 background = Canvas.new
 score_board = Canvas.new
 wall = Canvas.new(x: 780, y: 50, width: 10, height: 280)
-racket = Canvas.new(x: 40, y: 200, height: 80, width: 10)
+racket = Canvas.new(x: 40, y: 100, height: 120, width: 10)
 ball = Canvas.new(x: 50, y: land, width: 22, height: 22)
 
 # 背景
 background.on(:start) do
-  box_fill(left: 0, top: land + 10, right: 800, bottom: 480, color: "yellowgreen")
+  box_fill(left: 0, top: land + 10, right: Window.width, bottom: Window.height, color: "yellowgreen")
 end
 
 # スコアボード
 score_board.on(:start) do
   # 課題2: スコアを表示する
   loop do
-    box_fill(left: 0, top: 0, right: 500, bottom: 40, color: "black")
+    fill(color: "black")
     draw_font(x: 0, y: 0, string: "得点 #{score}点です。", size: 20)
   end
 end
 
 # 壁
 wall.on(:start) do
-  box_fill(left: 0 , top: 0, right: 10, bottom: 280, color: "burlywood")
+  fill(color: "burlywood")
 end
 
 # ラケット
 racket.on(:start) do
-  box_fill(left: 0, top: 0, right: 10, bottom: 80, color: "yellowgreen")
+  fill(color: "yellowgreen")
 end
 
 # 課題3: ラケットを動かす
@@ -96,13 +99,21 @@ ball.on(:start) do
 end
 
 # ボールが壁にぶつかったときの動き
-wall.on(:hit, ball) do
+ball.on(:hit, wall) do
   # 課題5: ボールは反射させる
-  ball.turn
-  ball.x -= 30
+  turn
+  self.x -= 30
 
   # 課題6: スコアを上げる
   score += 1
+
+  # 追加課題1-2: スピードを上げる
+  speed += 1
+
+  # 追加課題2-1: 音を鳴らす
+  play(name: 'piano_do.wav')
+  play(name: 'piano_mi.wav')
+  play(name: 'piano_so.wav')
 end
 
 # ボールとラケットが当たったときの動き
@@ -110,4 +121,9 @@ ball.on(:hit, racket) do
   # 課題7: ボールは反射させる
   turn
   self.x += 30
+
+  # 追加課題2-2: 音を鳴らす
+  play(name: 'piano_re.wav')
+  play(name: 'piano_fa.wav')
+  play(name: 'piano_ra.wav')
 end
