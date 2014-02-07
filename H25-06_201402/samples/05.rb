@@ -9,7 +9,9 @@ DECREMENT_PER_ONCE = 5
 Window.width = 800
 
 # バウンドの位置
-land = 310
+land1 = 310
+land2 = 310
+land3 = 310
 
 # 得点
 score = 0
@@ -30,11 +32,13 @@ score_board = Canvas.new
 remaining_display = Canvas.new(x: 0, y: 450, width: 300, height: 80)
 wall = Canvas.new(x: 780, y: 50, width: 10, height: 280)
 racket = Canvas.new(x: racket_position[0], y: racket_position[1], height: racket_height, width: racket_width)
-ball = Canvas.new(x: 50, y: land, width: 22, height: 22)
+ball1 = Canvas.new(x: 50, y: land1, width: 22, height: 22)
+ball2 = Canvas.new(x: 100, y: land2, width: 26, height: 26)
+ball3 = Canvas.new(x: 150, y: land3, width: 30, height: 30)
 
 # 背景
 background.on(:start) do
-  box_fill(left: 0, top: land + 10, right: 800, bottom: 480, color: "yellowgreen")
+  box_fill(left: 0, top: land1 + 10, right: 800, bottom: 480, color: "yellowgreen")
 end
 
 # スコアボード
@@ -88,10 +92,18 @@ end
 
 racket.on(:key_down, K_SPACE) do
   if game_end
-    ball.turn
-    ball.x = 50
-    ball.y = land
-    ball.visible = true
+    ball1.turn
+    ball1.x = 50
+    ball1.y = land1
+    ball1.visible = true
+    ball2.turn
+    ball2.x = 100
+    ball2.y = land2
+    ball2.visible = true
+    ball3.turn
+    ball3.x = 150
+    ball3.y = land3
+    ball3.visible = true
     racket.x = 40
     racket.y = 200
     racket_height = INITIAL_RACKET_LENGTH
@@ -102,18 +114,18 @@ racket.on(:key_down, K_SPACE) do
 end
 
 # ボール
-ball.on(:start) do
+ball1.on(:start) do
   # ボールを表示
   circle_fill(x: 10, y: 10, r: 10, color: "white")
 
   # ボールの跳ねる力
-  ball_power = 30
+  ball_power1 = 30
 
   # 重力の大きさ
-  gravity_power = 2
+  gravity_power1 = 2
 
   # y軸移動の初期値
-  position_y = ball_power
+  position_y1 = ball_power1
 
   # ボールの動き
   loop do
@@ -122,29 +134,29 @@ ball.on(:start) do
 
     # 課題4: ボールを跳ねさせる
     # y軸の移動
-    self.y -= position_y
+    self.y -= position_y1
 
     # ボールの跳ねる動き（下まで行ったら初期値に戻す）
-    if self.y >= land
-      position_y = ball_power
-      self.y = land
+    if self.y >= land1
+      position_y1 = ball_power1
+      self.y = land1
     else
-      position_y -= gravity_power
+      position_y1 -= gravity_power1
     end
 
     if x <= 0
       if nokori > 1
         turn
-        ball.x += racket.x + 10
-        ball.y += racket.y
+        ball1.x += racket.x + 10
+        ball1.y += racket.y
         nokori -= 1
       else
         nokori -= 1
 
         # 例題： リトライできる
-        ball.x = 0
-        ball.y = 0
-        ball.visible = false
+        ball1.x = 0
+        ball1.y = 0
+        ball1.visible = false
 
         # 例題： ゲームオーバーをつくる
         #-> vanish
@@ -166,11 +178,111 @@ ball.on(:start) do
   end
 end
 
+ball2.on(:start) do
+  circle_fill(x: 12, y: 12, r: 12, color: "yellow")
+
+  ball_power2 = 28
+
+  gravity_power2 = 2
+
+  position_y2 = ball_power2
+
+  loop do
+    move(12)
+
+    self.y -= position_y2
+
+    if self.y >= land2
+      position_y2 = ball_power2
+      self.y = land2
+    else
+      position_y2 -= gravity_power2
+    end
+
+    if x <= 0
+      if nokori > 1
+        turn
+        ball2.x += racket.x + 10
+        ball2.y += racket.y
+        nokori -= 1
+      else
+        nokori -= 1
+
+        ball2.x = 0
+        ball2.y = 0
+        ball2.visible = false
+
+        if game_end == false
+          play(name: "gameover.wav")
+          loop do
+          racket.y += 10
+          if racket.y > 400
+            break
+          end
+         end
+        end
+
+        game_end = true
+      end
+    end
+  end
+end
+
+ball3.on(:start) do
+  circle_fill(x: 14, y: 14, r: 14, color: "orange")
+
+  ball_power3 = 26
+
+  gravity_power3 = 2
+
+  position_y3 = ball_power3
+
+  loop do
+    move(14)
+
+    self.y -= position_y3
+
+    if self.y >= land3
+      position_y3 = ball_power3
+      self.y = land3
+    else
+      position_y3 -= gravity_power3
+    end
+
+    if x <= 0
+      if nokori > 1
+        turn
+        ball3.x += racket.x + 10
+        ball3.y += racket.y
+        nokori -= 1
+      else
+        nokori -= 1
+
+        ball3.x = 0
+        ball3.y = 0
+        ball3.visible = false
+
+        if game_end == false
+          play(name: "gameover.wav")
+          loop do
+          racket.y += 10
+          if racket.y > 400
+            break
+          end
+         end
+        end
+
+        game_end = true
+      end
+    end
+  end
+end
+
 # ボールが壁にぶつかったときの動き
-wall.on(:hit, ball) do
+wall.on(:hit, ball1) do
   # 課題5: ボールは反射させる
-  ball.turn
-  ball.x -= 30
+  ball1.turn
+  ball1.x -= 30
 
   # 課題6: スコアを上げる
   score += 1
@@ -209,10 +321,18 @@ wall.on(:hit, ball) do
 
   racket.on(:key_down, K_SPACE) do
     if game_end
-      ball.turn
-      ball.x = 50
-      ball.y = land
-      ball.visible = true
+      ball1.turn
+      ball1.x = 50
+      ball1.y = land1
+      ball1.visible = true
+      ball2.turn
+      ball2.x = 100
+      ball2.y = land2
+      ball2.visible = true
+      ball3.turn
+      ball3.x = 150
+      ball3.y = land3
+      ball3.visible = true
       racket.x = 40
       racket.y = 200
       score = 0
@@ -222,17 +342,51 @@ wall.on(:hit, ball) do
   end
 
   # ボールとラケットが当たったときの動き
-  ball.on(:hit, racket) do
+  ball1.on(:hit, racket) do
     # 課題7: ボールは反射させる
+    turn
+    self.x += 30
+  end
+
+  ball2.on(:hit, racket) do
+    turn
+    self.x += 30
+  end
+
+  ball3.on(:hit, racket) do
     turn
     self.x += 30
   end
   # <-- ここまで
 end
 
+wall.on(:hit, ball2) do
+  ball2.turn
+  ball2.x -= 30
+
+  score += 1
+end
+
+wall.on(:hit, ball3) do
+  ball3.turn
+  ball3.x -= 30
+
+  score += 1
+end
+
 # ボールとラケットが当たったときの動き
-ball.on(:hit, racket) do
+ball1.on(:hit, racket) do
   # 課題7: ボールは反射させる
+  turn
+  self.x += 30
+end
+
+ball2.on(:hit, racket) do
+  turn
+  self.x += 30
+end
+
+ball3.on(:hit, racket) do
   turn
   self.x += 30
 end
